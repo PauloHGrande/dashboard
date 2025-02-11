@@ -3,6 +3,9 @@ import { LayoutComponent } from './shared/components/layout/layout.component';
 import { DashboardComponent } from './business/dashboard/dashboard.component';
 import { TablesComponent } from './business/tables/tables.component';
 import { ProfileComponent } from './business/profile/profile.component';
+import { LoginComponent } from './business/authentication/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
+import { authenticatedGuard } from './core/guards/authenticated.guard';
 
 export const routes: Routes = [
     {
@@ -15,11 +18,13 @@ export const routes: Routes = [
             },
             {
                 path: 'profile',
-                component: ProfileComponent
+                component: ProfileComponent,
+                canActivate: [authGuard]
             },
             {
                 path: 'tables',
-                component: TablesComponent
+                component: TablesComponent,
+                canActivate: [authGuard]
             },
             {
                 path: '',
@@ -27,6 +32,11 @@ export const routes: Routes = [
                 pathMatch: 'full'
             }
         ]
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [authenticatedGuard]
     },
     {
         path: '**',
